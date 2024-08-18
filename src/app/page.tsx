@@ -13,7 +13,13 @@ import BarberShopItem from "./_components/barbershop-item";
 const Home =  async () => {
   // chamar o banco de dados
   const barbershops = await db.barbershop.findMany({});
-  console.log({ barbershops })
+  const popularBarbershops = await db.barbershop.findMany({
+
+    orderBy: {
+      name: 'desc'
+    }
+
+  })
 
   return (
     <div>
@@ -22,7 +28,7 @@ const Home =  async () => {
       <div className="p-5">
         <h2 className="text-x1 font-bold">Olá, Felipe!</h2>
         <p>Segunda-feira, 05 de agosto.</p>
-{/*Search*/}
+        {/*Search*/}
         <div className="flex items-center gap-2 mt-6">
             <Input 
             placeholder="Search..." 
@@ -32,7 +38,34 @@ const Home =  async () => {
           </Button>
         </div>
 
-{/*Banner*/}
+        {/*Busca Rápida*/}
+        <div className="mt-6 flex gap-3 overflow-x-scroll [&::-webkit-scrollbar]:hidden">
+
+          <Button className="gap-2" variant="secondary">
+            < Image
+            src="/cabelo.svg" width={16} height={16}
+            alt="Cabelo"
+            />
+            Cabelo
+            </Button>
+
+          <Button className="gap-2" variant="secondary">
+            <Image src="/barba.svg" width={16} height={16}
+            alt="Barba"/>  
+            Barba
+            </Button>
+          
+
+          <Button className="gap-2" variant="secondary">
+            <Image
+              src="/acabamento.svg" width={16} height={16}
+              alt="acabamento"
+            />
+            Acabamento
+            </Button>
+        </div>
+
+        {/*Banner*/}
         <div className="relative w=full h-[150px] mt-6">
           <Image  
           alt="Agende nos melhores com a Barber Shop"
@@ -70,8 +103,7 @@ const Home =  async () => {
           </CardContent>
         </Card>
 
-        <div>
-            <h2 className="mt-6 mb-3 text-xs font-bold uppercase text-gray-400">
+        <h2 className="mt-6 mb-3 text-xs font-bold uppercase text-gray-400">
           Agendamentos
         </h2>
         <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden"> 
@@ -79,8 +111,24 @@ const Home =  async () => {
           <BarberShopItem key={barbershop.id} barbershop={barbershop} />
           ))}
           </div>
+
+          <h2 className="mt-6 mb-3 text-xs font-bold uppercase text-gray-400">
+          Popular
+        </h2>
+        <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden"> 
+          {popularBarbershops.map((barbershop) => (
+          <BarberShopItem key={barbershop.id} barbershop={barbershop} />
+          ))}
+          </div>
         </div>
-      </div>
+
+        <Card>
+          <CardContent className="px-5 py-6">
+            <p className="text-sm text-gray-400">
+              © 2024 Copyright <span className="font-bold"> FSW Barber </span>
+              </p> 
+          </CardContent>
+        </Card>
       </div>
   );
 }
