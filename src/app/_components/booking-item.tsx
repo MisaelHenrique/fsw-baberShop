@@ -5,7 +5,7 @@ import { Card, CardContent } from "./ui/card";
 const BookingItem = () => {
     return ( 
         <>
-                {/*AGENDAMENTOS*/}
+        {/*TODO: AGENDAMENTOS COM PROPS*/}
         <h2 className="mt-6 mb-3 text-xs font-bold uppercase text-gray-400">
             Agendamentos
         </h2>
