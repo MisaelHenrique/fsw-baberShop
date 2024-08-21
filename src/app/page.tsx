@@ -57,7 +57,7 @@ const Home =  async () => {
         <div className="relative w=full h-[150px] mt-6">
           <Image  
           alt="Agende nos melhores com a Barber Shop"
-          src="/banner-01.png" 
+          src="/banner2.svg" 
           fill 
           className="object-cover rounded-xl" 
           />
