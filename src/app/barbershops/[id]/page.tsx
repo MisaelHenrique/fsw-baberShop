@@ -1,4 +1,3 @@
-import Footer from "@/app/_components/footer"
 import PhoneItem from "@/app/_components/phone-item"
 import ServiceItem from "@/app/_components/service-item"
 import { Button } from "@/app/_components/ui/button"
@@ -93,7 +92,7 @@ const BarbershopPage = async ({ params } : BarbershopPageProps ) =>  {
             <h2 className="text-xs font-bold uppercase text-gray-400 mb-3">Serviços</h2>
             <div className="space-y-3">
                 {barbershop.services.map((service)=> (
-                <ServiceItem key={service.id} service={service}/>
+                <ServiceItem key={service.id} barbershop={barbershop} service={service}/>
             ))}
             </div>
         </div>
@@ -104,7 +103,6 @@ const BarbershopPage = async ({ params } : BarbershopPageProps ) =>  {
                 <PhoneItem key={phone} phone={phone}/>
             ))}
         </div>
-        <Footer/>
     </div> 
     )
 }
