@@ -84,7 +84,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
 
     const handleBookingClick = () => {
         if (data?.user) {
-        return setBookingSheetIsOpen(true)
+            return setBookingSheetIsOpen(true)
         }
         return setSignInDialogIsOpen(true) 
     }
