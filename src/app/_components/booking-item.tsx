@@ -1,12 +1,18 @@
+"use client"
 import { Prisma } from "@prisma/client";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 import { Card, CardContent } from "./ui/card";
 import { format, isFuture } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
+import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 import Image from "next/image";
 import PhoneItem from "./phone-item";
+import { Button } from "./ui/button";
+import { Dialog, DialogClose, DialogContent,DialogDescription,DialogFooter,DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import { deleteBooking } from "../_actions/delete-booking";
+import { toast } from "sonner";
+import { useState } from "react";
 
 interface BookingItemProps{
     booking: Prisma.BookingGetPayload<{
@@ -21,13 +27,31 @@ interface BookingItemProps{
 }
 
 const BookingItem = ({ booking }: BookingItemProps) => {
+    const [isSheetOpen, setIsSheetOpen] = useState(false);
     const { service: {barbershop} } = booking;
     const isConfirmed = isFuture(booking.date);
+
+    const handleCancelBooking = async () => {
+        try {
+            await deleteBooking(booking.id);
+            setIsSheetOpen(false);
+            toast.success('Reserva cancelada com sucesso');
+            
+        } catch (error) {
+            console.error(error);
+            toast.error('Erro ao cancelar a reserva. Tente novamente');
+            
+        }
+    }
+
+    const handleSheetOpenChance = (isOpen: boolean) => {
+        setIsSheetOpen(isOpen);
+    }
 
     return ( 
         <>
         {/*TODO: AGENDAMENTOS COM PROPS*/}
-        <Sheet>
+        <Sheet open={isSheetOpen} onOpenChange={handleSheetOpenChance}>
             <SheetTrigger className="w-full">
             <Card className="min-w-[90%]">
             <CardContent className="flex justify-between p-0">
@@ -121,10 +145,38 @@ const BookingItem = ({ booking }: BookingItemProps) => {
 
                     <div className="space-y-3">
                     {barbershop.phones.map((phone, index) => <PhoneItem key={index} phone={phone}/>)}
-
                     </div>
-
                     </div>
+                    <SheetFooter className="mt-6">
+                        <div className="flex items-center gap-3">
+                            <SheetClose asChild>
+                            <Button variant="outline" className="w-full">Voltar</Button>
+                            </SheetClose>
+                            {isConfirmed &&(
+                                <Dialog>
+                                <DialogTrigger asChild>
+                                    <Button variant="destructive" className="w-full">Cancelar reserva</Button>
+                                </DialogTrigger>
+                                <DialogContent className="w-[90%]">
+                                    <DialogHeader>
+                                    <DialogTitle>Você quer cancelar a reserva?</DialogTitle>
+                                    <DialogDescription>
+                                        Tem certeza que deseja cancelar a reserva? Essa ação é irreversivel. 
+                                    </DialogDescription>
+                                    </DialogHeader>
+                                    <DialogFooter className="flex flex-row gap-3">
+                                        <DialogClose asChild>
+                                        <Button variant="secondary" className="w-full">Voltar</Button>
+                                        </DialogClose>
+                                        <DialogClose asChild>
+                                        <Button variant="destructive" className="w-full" onClick={handleCancelBooking}>Confirmar</Button>
+                                        </DialogClose>
+                                    </DialogFooter>
+                                </DialogContent>
+                                </Dialog>
+                            )}
+                        </div>
+                    </SheetFooter>
             </SheetContent>
         </Sheet>
         
