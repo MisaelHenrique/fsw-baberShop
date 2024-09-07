@@ -10,6 +10,8 @@ import Search from "./_components/seach";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./_lib/auth";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 
 const Home =  async () => {
@@ -48,8 +50,16 @@ const Home =  async () => {
       {/*Header*/}
       <Header/>
       <div className="p-5">
-        <h2 className="text-x1 font-bold">Olá, Felipe!</h2>
-        <p>Segunda-feira, 05 de agosto.</p>
+        <h2 className="text-x1 font-bold">Olá, {session?.user ? session.user.name : "bem"}</h2>
+        <p>
+          <span className="capitalize">
+            {format(new Date(), "EEEE, dd ", { locale: ptBR })}
+          </span>
+          <span>&nbsp;de&nbsp;</span>
+          <span>
+              {format(new Date(), "MMMM 'de' yyyy", {locale: ptBR})}
+          </span>
+          </p>
 
         {/*BUSCA*/}
         <div className="mt-6">

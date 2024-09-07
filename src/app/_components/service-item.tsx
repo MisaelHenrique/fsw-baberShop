@@ -13,7 +13,7 @@ import {
 } from "./ui/sheet"
 import { Calendar } from "./ui/calendar"
 import { ptBR } from "date-fns/locale"
-import { addDays, format, isPast, isToday, set } from "date-fns"
+import { format, isPast, isToday, set } from "date-fns"
 import { useEffect, useMemo, useState } from "react"
 import { useSession } from "next-auth/react"
 import { createBooking } from "../_actions/create-booking"
@@ -28,7 +28,7 @@ interface ServiceItemProps {
 }
 
 const TIME_LIST = [
-
+    
     "09:00",
     "09:45",
     "10:30",
@@ -187,7 +187,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                     locale={ptBR}
                     selected={selectedDay}
                     onSelect={handleDateSelected}
-                    fromDate={addDays(new Date(), 1)}
+                    fromDate={new Date()}
                     styles={{
                         head_cell: {
                         width: "100%",
