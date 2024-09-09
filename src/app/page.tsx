@@ -81,19 +81,20 @@ const Home =  async () => {
             
         </div>
 
-        {/*IMAGEM*/}
-        <div className="relative w=full h-[150px] mt-6">
-          <Image  
-          alt="Agende nos melhores com a Barber Shop"
-          src="/banner2.svg" 
-          fill 
-          className="object-cover rounded-xl" 
-          />
-        </div>
-
-        <h2 className="mt-6 mb-3 text-xs font-bold uppercase text-gray-400">
-          Agendamentos
-        </h2>
+        {/*AGENDAMENTOS*/}
+        {confirmedBookings.length > 0 && (
+          <>
+          <div className="relative w=full h-[150px] mt-6">
+            <Image
+              alt="Agende nos melhores com a Barber Shop"
+              src="/banner2.svg"
+              fill
+              className="object-cover rounded-xl" />
+          </div><h2 className="mt-6 mb-3 text-xs font-bold uppercase text-gray-400">
+              Agendamentos
+            </h2>
+            </>
+        )}
 
         {/*AGENDEMANTOS*/}
         <div className="flex overflow-x-auto gap-3 [&::-webkit-scrollbar]:hidden">
