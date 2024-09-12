@@ -90,13 +90,14 @@ const Home =  async () => {
               src="/banner2.svg"
               fill
               className="object-cover rounded-xl" />
-          </div><h2 className="mt-6 mb-3 text-xs font-bold uppercase text-gray-400">
+          </div>
+            <h2 className="mt-6 mb-3 text-xs font-bold uppercase text-gray-400">
               Agendamentos
             </h2>
             </>
         )}
 
-        {/*AGENDEMANTOS*/}
+        {/*RECOMENDADOS*/}
         <div className="flex overflow-x-auto gap-3 [&::-webkit-scrollbar]:hidden">
           {confirmedBookings.map(booking => (
             <BookingItem key={booking.id} booking={JSON.parse(JSON.stringify(booking))} />
