@@ -29,6 +29,7 @@ const Home =  async () => {
 
   const confirmedBookings = await getConfirmedBookings()
 
+
   return (
     <div>
       {/*Header*/}
